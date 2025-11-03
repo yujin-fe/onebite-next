@@ -8,7 +8,7 @@ import BookItem from "@/components/book-item";
 import fetchBooks from "../lib/fetch-books"
 import fetchRandomBooks from "../lib/fetch-random-books"
 
-export const getStaticSideProps = async () => {
+export const getStaticProps = async () => {
   //컴포넌트보다 먼저 실행이 되어서, 컴포넌트에 필요한 데이터를 불러오는 함수
   const [allBooks, recoBooks]= await  Promise.all([
     fetchBooks(),
@@ -19,12 +19,12 @@ export const getStaticSideProps = async () => {
     props:{
       allBooks,
       recoBooks
-    }
+    },
+    revalidate:3,
   }
 }
 
-export default function Home({allBooks, recoBooks}:InferGetStaticPropsType<typeof getStaticSideProps>) {
-  console.log(allBooks)
+export default function Home({allBooks, recoBooks}:InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <div className={style.container}>
       <section>
